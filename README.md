@@ -1,3 +1,3 @@
-# garfield_verification
+# MPGD_Sim
 
-Check code and verify garfield codes to do calculations of primary ionization and transport through various gas mixtures 
+Garfield++ related simulations for MPGD studies
