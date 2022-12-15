@@ -19,6 +19,7 @@
 #include <TF1.h>
 #include <TMath.h>
 #include <TString.h>
+#include <TFile.h>
 
 #include "Garfield/TrackHeed.hh"
 #include "Garfield/MediumMagboltz.hh"
@@ -39,12 +40,16 @@ int main(int argc, char * argv[]) {
   TApplication *app = new TApplication("app", &argc, argv);
   plottingEngine.SetDefaultStyle();
 
+  //filename for histogram save
+  TFile* file = new TFile("Clusters.root","Update");
+  TString hist_filename = "XeCO2_80_20_0_5mm";
+
   // Make a gas medium.
-  MediumMagboltz* gas = new MediumMagboltz("Ar", 80.0, "CO2", 20.0);
+  MediumMagboltz* gas = new MediumMagboltz("Xe", 80.0, "CO2", 20.0);
   gas->SetTemperature(293.15);
   gas->SetPressure(AtmosphericPressure);
   
-  constexpr double gap = 0.3; // cm
+  constexpr double gap = 0.05; // cm
   constexpr double length = 10.0; // cm
   //3 placement and 3 half dimension arguments
   SolidBox* box = new SolidBox(0, 0, 0, 0.5*length,0.5*length,0.5*gap);
@@ -141,6 +146,7 @@ int main(int argc, char * argv[]) {
   hClust->SetLineColor(kBlue+2);
   hClust->GetXaxis()->SetTitle("Number of Clusters");
   hClust->Draw();
+  hClust->Write(Form("%s",hist_filename.Data()));
   hClust->Fit(poisson_fit);
 
   c1->cd(2);
@@ -151,5 +157,6 @@ int main(int argc, char * argv[]) {
   hElec->Draw();
   c1->SetLogy(1);
 
+  file->Close();
   app->Run(true);
 }
