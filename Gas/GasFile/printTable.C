@@ -11,12 +11,12 @@ int main(int argc, char * argv[]) {
 
   MediumMagboltz gas;
   const std::string path = "/home/mposik/MPGD_Sim/Gas/GasFile/GeneratedTables/";
-  const std::string gasFile = "Xe_80.000000_CO2_20.000000_1.700000T_ang90.000000";
+  const std::string gasFile = "Ar_80.000000_CO2_20.000000_1.700000T_ang90.000000";
   gas.LoadGasFile(path + gasFile + ".gas");
   
   const std::string outpath = "/home/mposik/MPGD_Sim/Gas/GasFile/PlotTables/";
   std::ofstream fout;
-  fout.open(outpath + gasFile + ".csv");
+  fout.open(outpath + gasFile + ".dat");
 
   std::vector<double> efields;
   std::vector<double> bfields;
@@ -31,7 +31,7 @@ int main(int argc, char * argv[]) {
       std::cout << "B = " << bfields[j] << " T, theta = "
                 << angles[k] * RadToDegree << " degree\n";
       std::cout << "   E [V/cm]     vE [cm/us]    Long. Diff. [sqrt(cm)]     Trans. Diff. [sqrt(cm)]     alpha [1/cm]\n";
-      fout << "   E [V/cm],     vE [cm/us],    Long. Diff. [sqrt(cm)],     Trans. Diff. [sqrt(cm)],     alpha [1/cm]\n";
+      //fout << "   E [V/cm],     vE [cm/us],    Long. Diff. [sqrt(cm)],     Trans. Diff. [sqrt(cm)],     alpha [1/cm]\n";
       for (size_t i = 0; i < nE; ++i) {
         double ve = 0.;
         gas.GetElectronVelocityE(i, j, k, ve);
@@ -48,7 +48,7 @@ int main(int argc, char * argv[]) {
 
         std::printf("%10.3f    %10.3f    %10.3f     %10.3f     %10.3f\n", efields[i], ve, dl, dt, alpha);
         //fout << std::printf("%10.3f    %10.3f    %10.3f     %10.3f     %10.3f\n", efields[i], ve, dl, dt, alpha);
-	fout << efields[i] << "," << ve << "," << dl << "," << dt << "," << alpha << std::endl;
+	fout << efields[i] << " " << ve << " " << dl << " " << dt << " " << alpha << std::endl;
         //std::printf("%10.3f    %10.3f    %10.3f\n", efields[i], ve, dl);
       }
     }
