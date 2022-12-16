@@ -53,7 +53,7 @@ int main(int argc, char * argv[]) {
   // Flag to request logarithmic spacing.
   constexpr bool useLog = true;
   gas.SetFieldGrid(emin, emax, nE, useLog, bmin, bmax, nB, angle); 
-  const int ncoll = 10;
+  const int ncoll = 15;
   // Run Magboltz to generate the gas table.
   gas.GenerateGasTable(ncoll);
   // Save the table. 
